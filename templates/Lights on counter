@@ -1,0 +1,12 @@
+template:
+  - sensor:
+      - name: "Lights On Counter"
+        icon: mdi:lightbulb-group
+        state: >
+          {% set lights_on = states.light | selectattr('state', 'eq', 'on') | list | length %}
+          {{ lights_on}}
+      - name: "Living Room Lights On Counter"
+        icon: mdi:lightbulb-group
+        state: >
+          {% set lights_on = states.light | selectattr('entity_id', 'search', 'living_room') | selectattr('state', 'eq', 'on') | list | length %}
+          {{ lights_on }}
