@@ -1,0 +1,269 @@
+type: custom:stack-in-card
+title: null
+mode: vertical
+card_mod:
+  style: |
+    ha-card {
+      width: 100%;
+      }
+cards:
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: weather
+        card_mod:
+          style: |
+            ha-card {
+            --chip-background: none;
+            --chip-border-width: 0;
+            --chip-box-shadow: none;
+            }
+        entity: weather.forecast_home
+        show_conditions: false
+        show_temperature: true
+        tap_action:
+          action: none
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+      - type: template
+        card_mod:
+          style: |
+            ha-card {
+            --chip-background: none;
+            --chip-border-width: 0;
+            --chip-box-shadow: none;
+            }
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/master-mode
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        entity: input_select.master_mode
+        icon: |-
+          {% if is_state(entity, 'Good Morning') %}
+            mdi:weather-sunny
+          {% elif is_state(entity, 'Good Evening') %}
+            mdi:weather-sunset
+          {% elif is_state(entity, 'Good Night') %}
+            mdi:weather-night
+          {% elif is_state(entity, 'Sleeping') %}
+            mdi:sleep
+          {% elif is_state(entity, 'Nobody Home') %}
+            mdi:shield-home
+          {% elif is_state(entity, 'Cleaning') %}
+            mdi:creation-outline
+          {% elif is_state(entity, 'Friends') %}
+            mdi:kabaddi
+          {% elif is_state(entity, 'Overide') %}
+            mdi:auto-mode
+          {% else %}
+            mdi:auto-mode
+          {% endif %}
+        content: "{{states(entity)}}"
+        icon_color: |-
+          {% if is_state(entity, 'Good Morning') %}
+            accent
+          {% elif is_state(entity, 'Good Evening') %}
+            pink
+          {% elif is_state(entity, 'Good Night') %}
+            purple
+          {% elif is_state(entity, 'Sleeping') %}
+            blue
+          {% elif is_state(entity, 'Nobody Home') %}
+            accent
+          {% elif is_state(entity, 'Cleaning') %}
+            primary
+          {% elif is_state(entity, 'Friends') %}
+            green
+          {% elif is_state(entity, 'Overide') %}
+            orange
+          {% else %}
+            orange
+          {% endif %}
+      - type: entity
+        card_mod:
+          style: |
+            ha-card {
+            --chip-background: none;
+            --chip-border-width: 0;
+            --chip-box-shadow: none;
+            }
+        entity: sensor.living_room_temperature
+        icon_color: cyan
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/climate
+        hold_action:
+          action: more-info
+        double_tap_action:
+          action: none
+        icon: ""
+    alignment: justify
+  - type: custom:mushroom-title-card
+    card_mod:
+      style: |
+        ha-card {
+          border: none;
+          box-shadow: none;
+        }
+    title: |-
+      {% set time = now().hour %}
+      {% if (time >= 18) %}
+        Good Evening, {{user}}!
+      {% elif (time >= 12) %}
+        Good Afternoon, {{user}}!
+      {% elif (time >= 5) %}
+        Good Morning, {{user}}!
+      {% else %}
+        Good Night, {{user}}!
+      {% endif %}
+    subtitle: ""
+    title_tap_action:
+      action: none
+    subtitle_tap_action:
+      action: none
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-template-card
+        card_mod:
+          style: |
+            ha-card {
+              border: none;
+              box-shadow: none;
+            }
+        primary: Lights
+        secondary: |-
+          {% if is_state('sensor.lights_on_counter', '0') %}
+            
+          {% else %}
+            {{states('sensor.lights_on_counter')}} On
+          {% endif %}
+        icon: mdi:lightbulb
+        icon_color: amber
+        layout: vertical
+        entity: sensor.lights_on_counter_2
+        multiline_secondary: true
+        hold_action:
+          action: none
+        double_tap_action:
+          action: call-service
+          service: light.turn_off
+          target:
+            area_id:
+              - office
+              - living_room
+              - bedroom
+              - bathroom
+              - toilet
+              - kitchen
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/lights
+        badge_icon: |-
+          {% if is_state('sensor.lights_on_counter', '0') %}
+            mdi:power
+          {% else %}
+            mdi:numeric-{{states('sensor.lights_on_counter')}}
+          {% endif %}
+        badge_color: |-
+          {% if is_state('sensor.lights_on_counter', '0') %}
+            red
+          {% else %}
+            green
+          {% endif %}
+      - type: custom:mushroom-template-card
+        card_mod:
+          style: |
+            ha-card {
+            border: none;
+            box-shadow: none;
+            }
+        primary: Climate
+        secondary: ""
+        icon: mdi:fan
+        icon_color: primary
+        layout: vertical
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/climate
+      - type: custom:mushroom-template-card
+        card_mod:
+          style: |
+            ha-card {
+            border: none;
+            box-shadow: none;
+            }
+        primary: Media
+        secondary: ""
+        icon: mdi:television-speaker
+        icon_color: deep-purple
+        layout: vertical
+        double_tap_action:
+          action: none
+        hold_action:
+          action: none
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/media
+        badge_icon: ""
+        badge_color: ""
+      - type: custom:mushroom-template-card
+        card_mod:
+          style: |
+            ha-card {
+            border: none;
+            box-shadow: none;
+            }
+        primary: Lab
+        secondary: ""
+        icon: mdi:flask
+        icon_color: pink
+        layout: vertical
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/admin
+        hold_action:
+          action: none
+        double_tap_action:
+          action: navigate
+          navigation_path: /config
+      - type: custom:mushroom-template-card
+        card_mod:
+          style: |
+            ha-card {
+            border: none;
+            box-shadow: none;
+            }
+        primary: Security
+        secondary: ""
+        icon: mdi:shield-home
+        icon_color: deep-orange
+        layout: vertical
+        entity: lock.home_door
+        multiline_secondary: false
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-home/security
+        hold_action:
+          action: more-info
+        double_tap_action:
+          action: more-info
+        badge_icon: |-
+          {% if states('lock.home_door') == 'locked' %}
+            mdi:lock
+          {% else %}
+            mdi:lock-open
+          {% endif %}
+        badge_color: |-
+          {% if states('lock.home_door') == 'locked' %}
+            green
+          {% else %}
+            orange
+          {% endif %}
