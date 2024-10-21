@@ -1,0 +1,274 @@
+type: grid
+cards:
+  - type: custom:mushroom-template-card
+    primary: Living Room
+    secondary: >-
+      {{states('input_select.living_room_mode') }} //
+      {{states('input_boolean.living_room_light_state')}}
+    icon: mdi:sofa
+    icon_color: |-
+      {% if is_state('sensor.living_room_lights_on_counter', '0') %}
+        
+      {% else %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id: living_room
+    double_tap_action:
+      action: perform-action
+      perform_action: input_boolean.toggle
+      target:
+        entity_id: input_boolean.living_room_light_state
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/living-room
+    badge_icon: |-
+      {% if states('binary_sensor.living_room_group_presence') == 'on' %}
+        mdi:human-greeting-variant
+      {% else %}
+        
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.living_room_group_presence') == 'on' %}
+        primary
+      {% else %}
+        
+      {% endif %}
+  - type: custom:mushroom-template-card
+    primary: Kitchen
+    secondary: >-
+      {{states('input_select.kitchen_mode') }} //
+      {{states('input_boolean.kitchen_light_state')}}
+    icon: mdi:silverware-fork-knife
+    icon_color: |-
+      {% if is_state('sensor.kitchen_lights_on_counter', '0') %}
+        
+      {% else %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id: kitchen
+    double_tap_action:
+      action: perform-action
+      perform_action: input_boolean.toggle
+      data: {}
+      target:
+        entity_id: input_boolean.kitchen_light_state
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/kitchen
+    badge_icon: |-
+      {% if states('binary_sensor.kitchen_presence_sensor_occupancy') == 'on' %}
+        mdi:human-greeting-variant
+      {% else %}
+        
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.kitchen_presence_sensor_occupancy') == 'on' %}
+        primary
+      {% else %}
+        
+      {% endif %}
+  - type: custom:mushroom-template-card
+    primary: Office
+    secondary: >-
+      {{states('input_select.office_mode') }} //
+      {{states('input_boolean.office_light_state')}}
+    icon: mdi:desk
+    icon_color: |-
+      {% if is_state('sensor.office_lights_on_counter', '0') %}
+        
+      {% else %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id: office
+    double_tap_action:
+      action: call-service
+      target:
+        entity_id: input_boolean.office_light_state
+      perform_action: input_boolean.toggle
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/office
+    badge_icon: |-
+      {% if states('binary_sensor.office_motion_sensor_occupancy') == 'on' %}
+        mdi:human-greeting-variant
+      {% else %}
+        
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.office_motion_sensor_occupancy') == 'on' %}
+        primary
+      {% else %}
+        
+      {% endif %}
+  - type: custom:mushroom-template-card
+    primary: Bathroom
+    secondary: >-
+      {{states('input_select.bathroom_mode') }} //
+      {{states('input_boolean.bathroom_light_state')}}
+    icon: mdi:shower
+    icon_color: |-
+      {% if is_state('sensor.bathroom_lights_on_counter', '0') %}
+        
+      {% else %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id: bathroom
+    double_tap_action:
+      action: call-service
+      target:
+        entity_id: input_boolean.bathroom_light_state
+      perform_action: input_boolean.toggle
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/bathroom
+    badge_icon: |-
+      {% if states('binary_sensor.bathroom_presence_sensor_presence') == 'on' %}
+          mdi:human-greeting-variant
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.bathroom_presence_sensor_presence') == 'on' %}
+          primary
+      {% endif %}
+  - type: custom:mushroom-template-card
+    primary: Bedroom
+    secondary: >-
+      {{states('input_select.bedroom_mode') }} //
+      {{states('input_boolean.bedroom_light_state')}}
+    icon: mdi:bed-king
+    icon_color: |-
+      {% if is_state('sensor.bedroom_lights_on_counter', '0') %}
+        
+      {% else %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id: bedroom
+    double_tap_action:
+      action: call-service
+      target:
+        entity_id: input_boolean.bedroom_light_state
+      perform_action: input_boolean.toggle
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/bedroom
+    badge_icon: |-
+      {% if states('binary_sensor.bedroom_presence_sensor_presence') == 'on' %}
+        mdi:human-greeting-variant
+      {% else %}
+        
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.bedroom_presence_sensor_presence') == 'on' %}
+        primary
+      {% else %}
+        
+      {% endif %}
+  - type: custom:mushroom-template-card
+    primary: Toilet
+    secondary: >-
+      {{states('input_select.bathroom_mode') }} //
+      {{states('input_boolean.toilet_light_state')}}
+    icon: mdi:toilet
+    icon_color: |-
+      {% if is_state('light.toilet_light', 'on') %}
+        amber
+      {% endif %}
+    multiline_secondary: true
+    hold_action:
+      action: perform-action
+      perform_action: light.turn_off
+      target:
+        area_id:
+          - toilet
+    double_tap_action:
+      action: call-service
+      target:
+        entity_id: input_boolean.toilet_light_state
+      perform_action: input_boolean.toggle
+    tap_action:
+      action: navigate
+      navigation_path: /dashboard-home/bathroom
+    badge_icon: |-
+      {% if states('binary_sensor.toilet_presence_sensor_presence') == 'on' %}
+        mdi:emoticon-poop
+      {% endif %}
+    badge_color: |-
+      {% if states('binary_sensor.toilet_presence_sensor_presence') == 'on' %}
+        red
+      {% endif %}
+  - type: custom:mushroom-person-card
+    entity: person.gabriel
+    icon_type: entity-picture
+  - type: custom:mushroom-person-card
+    icon_type: entity-picture
+    entity: person.talia
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: entity
+        entity: switch.scooters_plugs_socket_1
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        double_tap_action:
+          action: none
+        icon_color: accent
+        content_info: state
+    card_mod:
+      style: |
+        ha-card {
+        --chip-background: none;
+        --chip-border-width: 0;
+        box-shadow: none;
+        }
+    alignment: center
+    layout_options:
+      grid_columns: 2
+      grid_rows: auto
+  - type: custom:mushroom-chips-card
+    chips:
+      - type: entity
+        entity: switch.scooters_plugs_socket_2
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        double_tap_action:
+          action: none
+        icon_color: accent
+        content_info: state
+    card_mod:
+      style: |
+        ha-card {
+        --chip-background: none;
+        --chip-border-width: 0;
+        box-shadow: none;
+        }
+    alignment: center
+    layout_options:
+      grid_columns: 2
+      grid_rows: auto
